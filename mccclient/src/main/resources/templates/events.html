@@ -3,20 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <title>List Events</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" th:href="@{webjars/bootstrap/4.3.1/css/bootstrap.min.css}"/>
+
 </head>
 <body>
     <main class="container">
-        <table>
-            <th:block th:each="event : ${list}">
-                <tr>
-                    <td th:text="${event.eventId}">...</td>
-                    <td th:text="${event.description}">...</td>
-                    <td th:text="${event.eventDate}">...</td>
-                    <td th:text="${event.ticketsMax}">...</td>
-                    <td th:text="${event.ticketsLeft}">...</td>
+        <h1>Events</h1>
+        <form class="form-horizontal" th:object="${eventCommand}"  method="post">
+            <table>
+                <tr th:each="event : ${listevents}">
+                    <td><input type="checkbox" th:id="event.eventId"></td>
+                    <td th:text="${event.eventId}"></td>
+                    <td th:text="${event.description}"></td>
+                    <td th:text="${event.ticketsLeft}"></td>
                 </tr>
-            </th:block>
-        </table>
+            </table>
+            <button class="btn btn-default" type="submit">Select</button>
+        </form>
     </main>
 </body>
+<script type="text/javascript" th:src="@{webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
 </html>

@@ -11,16 +11,16 @@
 <main class="container">
     <div class="card" style="width: 18rem;">
         <div class="card-body">
-            <form>
+            <form class="form-horizontal" th:object="${loginCommand}" th:action="@{/gettoken}" method="post">
                 <div class="form-group">
                     <label for="usernameInput">Username</label>
-                    <input type="text" class="form-control" id="usernameInput" placeholder="Enter username">
+                    <input type="text" class="form-control" th:field="*{username}" id="usernameInput" placeholder="Enter username">
                 </div>
                 <div class="form-group">
                     <label for="passwordInput">Password</label>
-                    <input type="password" class="form-control" id="passwordInput" placeholder="Enter password">
+                    <input type="password" class="form-control" th:field="*{password}" id="passwordInput" placeholder="Enter password">
                     <!--small id="emailHelp" class="form-text text-muted">Customer username.</small-->
-                    <a href="#" class="btn btn-primary" style="margin-top: 20px;">Login</a>
+                    <button type="submit" class="btn btn-default">Login</button>
                 </div>
             </form>
         </div>
