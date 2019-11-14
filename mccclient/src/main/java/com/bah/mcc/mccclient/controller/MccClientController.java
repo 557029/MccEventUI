@@ -2,10 +2,12 @@ package com.bah.mcc.mccclient.controller;
 
 import com.bah.mcc.mccclient.command.EventCommand;
 import com.bah.mcc.mccclient.command.LoginCommand;
+import com.bah.mcc.mccclient.command.RegistrationCommand;
 import com.bah.mcc.mccclient.dataaccess.MccCustomerDTO;
 import com.bah.mcc.mccclient.dataaccess.MccEventDTO;
 import com.bah.mcc.mccclient.dataaccess.Token;
 import com.bah.mcc.mccclient.service.MccClientService;
+import com.bah.mcc.mccclient.service.MccCustomerService;
 import com.bah.mcc.mccclient.service.MccEventService;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -30,6 +33,8 @@ import java.util.List;
 public class MccClientController {
     private MccClientService clientService;
     private MccEventService eventService;
+    private MccCustomerService customerService;
+
     private LoginCommand loginCommand;
     private Token token;
     private MccCustomerDTO customer;
@@ -44,13 +49,15 @@ public class MccClientController {
         this.eventService = eventService;
     }
 
+    @Autowired
+    public void setCustomerService(MccCustomerService customerService) {
+        this.customerService = customerService;
+    }
+
     @GetMapping("/")
     public String main(Model model) {
         LoginCommand loginCommand = new LoginCommand();
         model.addAttribute("loginCommand", loginCommand);
-        //model.addAttribute("message", message);
-        //model.addAttribute("tasks", tasks);
-
         return "index"; //view
     }
 
@@ -71,8 +78,16 @@ public class MccClientController {
         final List<MccEventDTO> list = this.eventService.getAllEvents(this.token);
         model.addAttribute("listevents", list);
         model.addAttribute("eventCommand", evenCommand);
-
         return "events"; //view
     }
+
+    @RequestMapping(value = "/registration", method = RequestMethod.POST)
+    public void registratation(@ModelAttribute RegistrationCommand registrationCommand, Model model) {
+        MccCustomerDTO customerDTO = this.customerService.getCustomer(this.token, this.customer.getUsername());
+        model.addAttribute("customer", customerDTO);
+        model.addAttribute("registrationCommand", registrationCommand);
+    }
+
+
 
 }

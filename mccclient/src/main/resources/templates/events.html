@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>List Events</title>
@@ -10,15 +10,18 @@
 <body>
     <main class="container">
         <h1>Events</h1>
-        <form class="form-horizontal" th:object="${eventCommand}"  method="post">
-            <table>
-                <tr th:each="event : ${listevents}">
-                    <td><input type="checkbox" th:id="event.eventId"></td>
-                    <td th:text="${event.eventId}"></td>
-                    <td th:text="${event.description}"></td>
-                    <td th:text="${event.ticketsLeft}"></td>
-                </tr>
-            </table>
+
+        <form:select>
+
+        </form:select>
+
+        <form class="form-horizontal" th:object="${eventCommand}" th:action="@{/registration}"  method="post">
+            <select id="eventId" name="eventId">
+                <option th:value="${event.eventId}">${event.description}</option>
+
+            </select>
+
+
             <button class="btn btn-default" type="submit">Select</button>
         </form>
     </main>
